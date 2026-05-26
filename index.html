@@ -1,0 +1,485 @@
+<!--
+  MTS Volunteer Interest Form
+  Deploy at: motivatingtheteenspirit.com/volunteer
+
+  KEAP SETUP (2 steps):
+  1. Create a Web Form in your Keap/Infusionsoft account (name it "Volunteer Interest Form")
+  2. Replace the two placeholder values below in the <form> tag:
+     - KEAP_APP_NAME  → your Keap subdomain, found in your account URL
+                         e.g. if your URL is "ab123.infusionsoft.com", use "ab123"
+     - KEAP_FORM_XID  → the xid value from the embed code Keap generates for that form
+
+  CUSTOM FIELDS NOTE:
+  Standard contact fields (name, email, phone, city, state) use Keap's built-in field names.
+  The remaining fields require custom fields to be created in Keap. After creating each custom
+  field, update the corresponding name="inf_custom_FIELDNAME" attributes below to match the
+  field names Keap assigns.
+
+  Everything else is ready to go.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Volunteer — Motivating the Teen Spirit</title>
+  <meta name="description" content="Join the Motivating the Teen Spirit volunteer team. Help equip teens with the emotional intelligence and life skills they need to navigate a complex world." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:      #00a0af;
+      --teal-dark: #007d8a;
+      --orange:    #e47e3d;
+      --olive:     #505642;
+      --purple:    #8f6c95;
+      --white:     #ffffff;
+      --bg:        #f9fafb;
+      --text:      #1a1a1a;
+      --muted:     #6b7280;
+      --border:    #e5e7eb;
+      --radius:    6px;
+      --font:      'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--olive);
+      color: var(--white);
+      padding: 56px 24px 60px;
+    }
+
+    .hero-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hero-wordmark {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.82);
+      max-width: 600px;
+      margin-bottom: 14px;
+    }
+
+    .hero-stat {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--teal);
+      border-top: 2px solid var(--teal);
+      padding-top: 14px;
+    }
+
+    /* ── Form wrapper ── */
+    .form-section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    .form-intro {
+      font-size: .95rem;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    /* ── Form groups ── */
+    .form-group {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+    }
+
+    .form-group-title {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+
+    .field { margin-bottom: 18px; }
+    .field:last-child { margin-bottom: 0; }
+
+    .field label {
+      display: block;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .field label .req  { color: var(--orange); margin-left: 2px; }
+    .field label .hint { font-weight: 400; color: var(--muted); font-size: .8rem; margin-left: 4px; }
+
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field textarea {
+      width: 100%;
+      padding: 10px 14px;
+      font-family: var(--font);
+      font-size: .9rem;
+      color: var(--text);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0,160,175,.12);
+    }
+
+    .field textarea { resize: vertical; min-height: 96px; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .field-row { grid-template-columns: 1fr; }
+      .form-group { padding: 20px 16px 18px; }
+    }
+
+    /* Radios */
+    .radio-group {
+      display: flex;
+      gap: 24px;
+      margin-top: 4px;
+    }
+
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .9rem;
+      font-weight: 400;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+
+    .radio-group input[type="radio"] {
+      accent-color: var(--teal);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Checkboxes */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 520px) {
+      .checkbox-grid { grid-template-columns: 1fr; }
+    }
+
+    .checkbox-grid label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .875rem;
+      font-weight: 400;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+
+    .checkbox-grid input[type="checkbox"] {
+      accent-color: var(--teal);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Conditional textarea */
+    .conditional-field { display: none; margin-top: 14px; }
+    .conditional-field.visible { display: block; }
+
+    /* Submit */
+    .submit-wrap { margin-top: 28px; }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 15px 24px;
+      background: var(--teal);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .btn-submit:hover { background: var(--teal-dark); }
+
+    .submit-note {
+      font-size: .78rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--olive);
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: .82rem;
+    }
+
+    footer a { color: var(--teal); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer .footer-line { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-wordmark">Motivating the Teen Spirit</span>
+      <h1>Become a Volunteer</h1>
+      <p>
+        For 28 years, Motivating the Teen Spirit has equipped teens with the emotional intelligence,
+        self-trust, and life skills they need to navigate a complex world — from the inside out.
+        Volunteers are essential to that work.
+      </p>
+      <p>
+        Today's teens are navigating a world that is louder, faster, and more emotionally demanding
+        than ever before. Most are not being equipped with the tools to handle it.
+        That is the gap we close — and we cannot close it without people like you.
+      </p>
+      <span class="hero-stat">2,000+ teens served &nbsp;·&nbsp; 8 in 10 return by choice &nbsp;·&nbsp; 28 years of service</span>
+    </div>
+  </header>
+
+  <!-- ── FORM ── -->
+  <main class="form-section">
+    <p class="form-intro">
+      Tell us about yourself. Because we work directly with teens in emotionally sensitive environments,
+      we review every application with care. Complete all required fields and we'll follow up within a few business days.
+    </p>
+
+    <!--
+      KEAP INTEGRATION:
+      Replace KEAP_APP_NAME with your Keap subdomain (e.g. "ab123")
+      Replace KEAP_FORM_XID with the xid from your Keap web form embed code
+    -->
+    <form
+      action="https://KEAP_APP_NAME.infusionsoft.com/app/form/process"
+      method="POST"
+      onsubmit="return validateForm(this)"
+    >
+      <input type="hidden" name="inf_form_xid"  value="KEAP_FORM_XID" />
+      <input type="hidden" name="inf_form_name" value="Volunteer Interest Form" />
+
+      <!-- SECTION 1 ── About You -->
+      <div class="form-group">
+        <div class="form-group-title">Section 1 — About You</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="first_name">First name <span class="req">*</span></label>
+            <input type="text" id="first_name" name="inf_field_FirstName" required autocomplete="given-name" />
+          </div>
+          <div class="field">
+            <label for="last_name">Last name <span class="req">*</span></label>
+            <input type="text" id="last_name" name="inf_field_LastName" required autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email address <span class="req">*</span></label>
+          <input type="email" id="email" name="inf_field_Email" required autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone number <span class="req">*</span></label>
+          <input type="tel" id="phone" name="inf_field_Phone1" required autocomplete="tel" />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="city">City <span class="req">*</span></label>
+            <input type="text" id="city" name="inf_field_City" required autocomplete="address-level2" />
+          </div>
+          <div class="field">
+            <label for="state">State <span class="req">*</span></label>
+            <input type="text" id="state" name="inf_field_State" required autocomplete="address-level1" placeholder="e.g. CA" />
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2 ── Your Background -->
+      <div class="form-group">
+        <div class="form-group-title">Section 2 — Your Background</div>
+
+        <div class="field">
+          <label for="occupation">Current occupation or role <span class="req">*</span></label>
+          <!-- KEAP: Create custom field "Occupation" and update name attribute to match -->
+          <input type="text" id="occupation" name="inf_custom_Occupation" required />
+        </div>
+
+        <div class="field">
+          <label>Have you worked with teens before? <span class="req">*</span></label>
+          <!-- KEAP: Create custom radio field "TeenExperience" and update name attributes to match -->
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="inf_custom_TeenExperience" value="Yes" required
+                onchange="document.getElementById('teen-detail').classList.add('visible')" />
+              Yes
+            </label>
+            <label>
+              <input type="radio" name="inf_custom_TeenExperience" value="No"
+                onchange="document.getElementById('teen-detail').classList.remove('visible')" />
+              No
+            </label>
+          </div>
+        </div>
+
+        <div class="conditional-field" id="teen-detail">
+          <div class="field">
+            <label for="teen_detail_text">Briefly describe that experience <span class="hint">(optional)</span></label>
+            <!-- KEAP: Create custom textarea field "TeenExperienceDetail" and update name attribute -->
+            <textarea id="teen_detail_text" name="inf_custom_TeenExperienceDetail" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3 ── Your Interest -->
+      <div class="form-group">
+        <div class="form-group-title">Section 3 — Your Interest</div>
+
+        <div class="field">
+          <label for="motivation">Why do you want to volunteer with Motivating the Teen Spirit? <span class="req">*</span></label>
+          <!-- KEAP: Create custom textarea field "VolunteerMotivation" and update name attribute -->
+          <textarea id="motivation" name="inf_custom_VolunteerMotivation" rows="4" required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="referral">How did you hear about us? <span class="req">*</span></label>
+          <!-- KEAP: Create custom text field "ReferralSource" and update name attribute -->
+          <input type="text" id="referral" name="inf_custom_ReferralSource" required />
+        </div>
+      </div>
+
+      <!-- SECTION 4 ── Availability & Role -->
+      <div class="form-group">
+        <div class="form-group-title">Section 4 — Availability &amp; Role</div>
+
+        <div class="field">
+          <label>Availability <span class="req">*</span> <span class="hint">Select all that apply</span></label>
+          <!-- KEAP: Create custom checkbox fields for each option and update name attributes -->
+          <div class="checkbox-grid">
+            <label><input type="checkbox" name="inf_custom_AvailWeekdayMornings" value="Weekday mornings" /> Weekday mornings</label>
+            <label><input type="checkbox" name="inf_custom_AvailWeekdayEvenings" value="Weekday evenings" /> Weekday evenings</label>
+            <label><input type="checkbox" name="inf_custom_AvailWeekends"         value="Weekends"         /> Weekends</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Areas of interest <span class="req">*</span> <span class="hint">Select all that apply</span></label>
+          <!-- KEAP: Create custom checkbox fields for each option and update name attributes -->
+          <div class="checkbox-grid">
+            <label><input type="checkbox" name="inf_custom_InterestFacilitation" value="Program facilitation" /> Program facilitation</label>
+            <label><input type="checkbox" name="inf_custom_InterestEvents"        value="Event support"        /> Event support</label>
+            <label><input type="checkbox" name="inf_custom_InterestOutreach"      value="Community outreach"   /> Community outreach</label>
+            <label><input type="checkbox" name="inf_custom_InterestAdmin"         value="Admin &amp; operations"       /> Admin &amp; operations</label>
+            <label><input type="checkbox" name="inf_custom_InterestSocial"        value="Social media &amp; content"   /> Social media &amp; content</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Are you willing to undergo a background check? <span class="req">*</span></label>
+          <!-- KEAP: Create custom radio field "BackgroundCheck" and update name attributes -->
+          <div class="radio-group">
+            <label><input type="radio" name="inf_custom_BackgroundCheck" value="Yes" required /> Yes</label>
+            <label><input type="radio" name="inf_custom_BackgroundCheck" value="No"            /> No</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="notes">Anything else you'd like us to know? <span class="hint">(optional)</span></label>
+          <!-- KEAP: Create custom textarea field "AdditionalNotes" and update name attribute -->
+          <textarea id="notes" name="inf_custom_AdditionalNotes" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="btn-submit">Submit Volunteer Application</button>
+        <p class="submit-note">We review every application and will follow up within a few business days.</p>
+      </div>
+
+    </form>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p class="footer-line"><a href="https://motivatingtheteenspirit.com">motivatingtheteenspirit.com</a></p>
+    <p class="footer-line"><a href="mailto:jelani@motivatingthemasses.com">jelani@motivatingthemasses.com</a></p>
+    <p>&copy; Motivating the Masses, Inc.</p>
+  </footer>
+
+  <script>
+    function validateForm(form) {
+      var avail = form.querySelectorAll('[name^="inf_custom_Avail"]:checked');
+      if (avail.length === 0) {
+        alert('Please select at least one availability option.');
+        return false;
+      }
+      var interest = form.querySelectorAll('[name^="inf_custom_Interest"]:checked');
+      if (interest.length === 0) {
+        alert('Please select at least one area of interest.');
+        return false;
+      }
+      return true;
+    }
+  </script>
+
+</body>
+</html>
