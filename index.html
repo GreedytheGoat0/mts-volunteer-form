@@ -43,6 +43,7 @@
       --border:    #e5e7eb;
       --radius:    6px;
       --font:      'Inter', system-ui, sans-serif;
+      --max-w:     960px;
     }
 
     body {
@@ -54,53 +55,86 @@
 
     /* ── Hero ── */
     .hero {
-      background: var(--olive);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #505642 0%, #2d3024 100%);
       color: var(--white);
-      padding: 56px 24px 60px;
+      padding: 64px 48px 72px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(0,160,175,.32) 0%, transparent 62%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -140px;
+      left: -60px;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(143,108,149,.24) 0%, transparent 62%);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     .hero-inner {
-      max-width: 720px;
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
       margin: 0 auto;
     }
 
-    .hero-wordmark {
+    .hero-logo {
       display: block;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 28px;
+      height: 48px;
+      width: auto;
+      margin-bottom: 32px;
     }
 
     .hero h1 {
-      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-size: clamp(1.9rem, 4vw, 3rem);
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1.15;
       margin-bottom: 20px;
     }
 
     .hero p {
       font-size: 1.05rem;
-      color: rgba(255,255,255,.82);
-      max-width: 600px;
+      color: rgba(255,255,255,.8);
+      max-width: 640px;
       margin-bottom: 14px;
     }
 
+    .hero-accent {
+      display: block;
+      height: 2px;
+      width: 200px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      margin: 24px 0 18px;
+    }
+
     .hero-stat {
-      display: inline-block;
-      margin-top: 10px;
       font-size: .875rem;
       font-weight: 600;
       color: var(--teal);
-      border-top: 2px solid var(--teal);
-      padding-top: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 48px 24px 56px; }
     }
 
     /* ── Form wrapper ── */
     .form-section {
-      max-width: 720px;
+      max-width: var(--max-w);
       margin: 0 auto;
       padding: 48px 24px 64px;
     }
@@ -108,7 +142,25 @@
     .form-intro {
       font-size: .95rem;
       color: var(--muted);
-      margin-bottom: 36px;
+      margin-bottom: 32px;
+    }
+
+    /* ── 2-column grid ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .form-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (max-width: 680px) {
+      .form-grid { grid-template-columns: 1fr; }
     }
 
     /* ── Form groups ── */
@@ -117,7 +169,6 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 28px 28px 24px;
-      margin-bottom: 20px;
     }
 
     .form-group-title {
@@ -173,7 +224,7 @@
       gap: 12px;
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 480px) {
       .field-row { grid-template-columns: 1fr; }
       .form-group { padding: 20px 16px 18px; }
     }
@@ -210,7 +261,7 @@
       margin-top: 6px;
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 480px) {
       .checkbox-grid { grid-template-columns: 1fr; }
     }
 
@@ -265,8 +316,8 @@
 
     /* ── Footer ── */
     footer {
-      background: var(--olive);
-      color: rgba(255,255,255,.6);
+      background: #2d3024;
+      color: rgba(255,255,255,.55);
       text-align: center;
       padding: 28px 24px;
       font-size: .82rem;
@@ -282,7 +333,10 @@
   <!-- ── HERO ── -->
   <header class="hero">
     <div class="hero-inner">
-      <span class="hero-wordmark">Motivating the Teen Spirit</span>
+
+      <!-- MTS Logo (inline SVG — cls-1 fill:none removes black background rect) -->
+      <svg class="hero-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 796.72 618.03" aria-label="Motivating the Teen Spirit"><defs><style>.cls-1{fill:none;}.cls-2{fill:#00a0af;}.cls-3{fill:#8f6c95;}.cls-4{fill:#e47e3d;}.cls-5{fill:#f1f2f2;}</style></defs><rect class="cls-1" width="796.72" height="618.03"/><path class="cls-2" d="M345.06,308.6h-.12a2.57,2.57,0,0,1-2.44-2.68c0-.07.33-7.16.25-14.69a87,87,0,0,0-.95-14.05,75.14,75.14,0,0,0-3,9.45c-1.42,5.43-2.45,10.55-2.46,10.6a2.56,2.56,0,0,1-5-.1c0-.05-.84-5.16-2.08-10.58a66.17,66.17,0,0,0-2.74-9.57,87.29,87.29,0,0,0-1.63,14c-.44,7.4-.48,14.37-.48,14.44a2.56,2.56,0,0,1-2.56,2.55h0a2.55,2.55,0,0,1-2.55-2.57c0-.07,0-7.57.53-15.33.91-14.64,2.53-17.92,4.15-19.28a3.45,3.45,0,0,1,2.83-.81c2.45.41,4.5,2.94,7.19,14.28,0,.12.05.25.08.37.06-.23.12-.46.19-.69a74.76,74.76,0,0,1,2.79-8.64c1.09-2.65,2.55-5.35,5.08-5.35h.05a3.6,3.6,0,0,1,2.6,1.19c1.43,1.52,2.92,5.05,3.09,19.71.1,7.81-.25,15.26-.25,15.33A2.57,2.57,0,0,1,345.06,308.6Z" transform="translate(0.02 2.98)"/><path class="cls-3" d="M369.07,310.26l-.61,0c-2.56-.15-6.06-1.4-8.14-6.44-1.39-3.39-2-8-1.82-14.18.21-7.3,1.06-12.24,2.69-15.54,1.73-3.51,4.43-5.29,8-5.29,4.21,0,7.4,2.13,9.23,6.16,1.42,3.11,2.07,7.34,2.08,13.32.23,9.4-1.46,15.91-5,19.35A9.07,9.07,0,0,1,369.07,310.26Zm.14-36.2c-1.37,0-5,0-5.44,15.71-.16,5.56.29,14.93,5,15.21a3.83,3.83,0,0,0,3.06-1.15c1.38-1.34,3.67-5.12,3.41-15.46v-.07C375.25,274.06,371,274.06,369.21,274.06Z" transform="translate(0.02 2.98)"/><path class="cls-4" d="M411.38,272.85a2.56,2.56,0,0,1-2.63,2.44h0c-2.17-.1-4.27-.15-6.2-.17-.16,12.22-.32,30.58-.11,32.31a2.56,2.56,0,0,1-2.18,2.89,2.17,2.17,0,0,1-.36,0,2.57,2.57,0,0,1-2.53-2.21c-.31-2.23-.05-25.16.05-33-3.52.05-5.8.19-5.84.19h-.23a2.56,2.56,0,0,1-.08-5.11c.33,0,8.23-.49,17.71-.05A2.56,2.56,0,0,1,411.38,272.85Z" transform="translate(0.02 2.98)"/><path class="cls-2" d="M423,309.44a2.56,2.56,0,0,1-2.56-2.56V272.79a2.56,2.56,0,1,1,5.12,0v34.09a2.55,2.55,0,0,1-2.56,2.56Z" transform="translate(0.02 2.98)"/><path class="cls-3" d="M445.73,308.6a2.57,2.57,0,0,1-2.46-1.84c-.28-1-6.89-23.76-7.79-33.64a2.56,2.56,0,0,1,5.1-.47c.51,5.59,3.08,16,5.1,23.58,1.75-6.74,4.1-16.05,5.83-23.85a2.56,2.56,0,1,1,5,1.12c-3.13,14.08-8.25,33-8.3,33.21a2.56,2.56,0,0,1-2.45,1.89Z" transform="translate(0.02 2.98)"/><path class="cls-4" d="M485.87,308.2a2.57,2.57,0,0,1-2.81-2.29c0-.06-.47-4.6-1.37-10.31h-11.9c-.77,5.87-1.13,10.57-1.13,10.63a2.55,2.55,0,0,1-2.55,2.37h-.19a2.58,2.58,0,0,1-2.37-2.75c0-.36.68-8.94,2.16-17.67,2.34-13.72,5.22-19.58,9.66-19.58s7.46,5.78,10.16,19.31c1.72,8.64,2.59,17.12,2.63,17.48A2.57,2.57,0,0,1,485.87,308.2Zm-15.34-17.72h10.28c0-.15-.06-.29-.08-.43-2.43-12.7-4.66-15.59-5.34-16.2-.66.65-2.78,3.67-4.84,16.49a.59.59,0,0,0,0,.14Z" transform="translate(0.02 2.98)"/><path class="cls-2" d="M517.23,272.85a2.56,2.56,0,0,1-2.63,2.44h0c-2.17-.1-4.27-.15-6.2-.17-.16,12.22-.32,30.58-.11,32.31a2.56,2.56,0,0,1-2.18,2.89,2.17,2.17,0,0,1-.36,0,2.56,2.56,0,0,1-2.53-2.21c-.31-2.23-.05-25.16.05-33-3.52.05-5.8.19-5.84.19h-.23a2.56,2.56,0,0,1-.08-5.11c.33,0,8.23-.49,17.71-.05A2.56,2.56,0,0,1,517.23,272.85Z" transform="translate(0.02 2.98)"/><path class="cls-3" d="M526.3,306.88V272.79a2.56,2.56,0,0,1,2.56-2.56h0a2.55,2.55,0,0,1,2.56,2.56v34.09a2.56,2.56,0,1,1-5.12,0Z" transform="translate(0.02 2.98)"/><path class="cls-4" d="M544.9,308.6a2.56,2.56,0,0,1-2.57-2.56V271.36a2.56,2.56,0,0,1,4.95-.92c3.77,9.71,7.57,18.08,10.42,24V272.55a2.57,2.57,0,1,1,5.13,0v32.7a2.56,2.56,0,0,1-4.81,1.23c-.07-.11-4.83-8.89-10.56-22.13V306A2.56,2.56,0,0,1,544.9,308.6Z" transform="translate(0.02 2.98)"/><path class="cls-2" d="M584.66,308.6a9,9,0,0,1-6.74-2.78c-3.35-3.45-4.78-9.79-4.49-19.95a29.5,29.5,0,0,1,2.35-11.23c1.88-4,4.82-6.23,8.29-6.23,6.41,0,9.82,5.75,9.82,9.9a2.56,2.56,0,1,1-5.12,0c0-1.05-1.13-4.78-4.7-4.78-3.35,0-5.34,6.44-5.52,12.49-.3,10.52,1.49,14.63,3,16.23a4,4,0,0,0,3.07,1.23,3.61,3.61,0,0,0,2.86-1.17c1.52-1.66,2-4.79,2.11-7.1h-4.18a2.57,2.57,0,0,1,0-5.13h6.7a2.56,2.56,0,0,1,2.55,2.34c.08.9.66,8.91-3.4,13.35A8.72,8.72,0,0,1,584.66,308.6Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M330.68,322.34a1.46,1.46,0,0,1-1.49,1.39h0c-1.23-.06-2.42-.09-3.51-.1-.09,6.93-.18,17.33-.06,18.31a1.45,1.45,0,0,1-1.24,1.64h-.2a1.46,1.46,0,0,1-1.44-1.25c-.17-1.27,0-14.26,0-18.7-2,0-3.29.11-3.31.11h-.13a1.45,1.45,0,0,1,0-2.9c.19,0,4.66-.27,10,0A1.45,1.45,0,0,1,330.68,322.34Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M351.08,340.94a1.45,1.45,0,0,1-1.45,1.45h0a1.45,1.45,0,0,1-1.44-1.46V332.3h-6v8.85a1.46,1.46,0,0,1-2.91,0V321.47a1.46,1.46,0,0,1,2.91,0v7.93h6v-8.06a1.45,1.45,0,0,1,1.45-1.45h0a1.45,1.45,0,0,1,1.45,1.45C351.08,321.52,351.09,339.24,351.08,340.94Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M370.75,341a1.45,1.45,0,0,1-1.45,1.46c-1.13,0-1.73,0-2.95.08s-2.56.08-3.86.08a1.45,1.45,0,0,1-1.45-1.5c.17-4.26-.17-19.36-.17-19.51a1.46,1.46,0,0,1,.41-1,1.5,1.5,0,0,1,1-.43h6.87a1.45,1.45,0,0,1,0,2.9H363.8c0,1.5.08,4,.12,6.64H368a1.45,1.45,0,1,1,0,2.9H364c0,2.66,0,5.27,0,7.13.76,0,1.52,0,2.27-.06,1.19,0,1.87-.09,3.05-.09A1.45,1.45,0,0,1,370.75,341Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M408.06,322.34a1.46,1.46,0,0,1-1.49,1.39h0c-1.23-.06-2.41-.09-3.51-.1-.09,6.93-.18,17.33-.06,18.31a1.45,1.45,0,0,1-1.24,1.64h-.2a1.45,1.45,0,0,1-1.43-1.25c-.18-1.27,0-14.26,0-18.7-2,0-3.29.11-3.32.11h-.13a1.45,1.45,0,0,1,0-2.9c.19,0,4.67-.27,10,0A1.44,1.44,0,0,1,408.06,322.34Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M426.58,341a1.45,1.45,0,0,1-1.45,1.46c-1.13,0-1.73,0-3,.08s-2.55.08-3.85.08a1.45,1.45,0,0,1-1.45-1.5c.16-4.26-.17-19.36-.17-19.51a1.46,1.46,0,0,1,.41-1,1.48,1.48,0,0,1,1-.43H425a1.45,1.45,0,1,1,0,2.9h-5.38c0,1.5.08,4,.12,6.64h4.09a1.45,1.45,0,0,1,0,2.9h-4c0,2.66,0,5.27,0,7.13.76,0,1.52,0,2.27-.06,1.19,0,1.87-.09,3.05-.09A1.45,1.45,0,0,1,426.58,341Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M446.23,341a1.45,1.45,0,0,1-1.45,1.46c-1.13,0-1.73,0-2.95.08s-2.56.08-3.86.08a1.45,1.45,0,0,1-1.45-1.5c.17-4.26-.17-19.36-.17-19.51a1.46,1.46,0,0,1,.41-1,1.48,1.48,0,0,1,1-.43h6.87a1.45,1.45,0,0,1,0,2.9h-5.39c0,1.5.08,4,.12,6.64h4.09a1.45,1.45,0,0,1,0,2.9h-4.05c0,2.66,0,5.27,0,7.13.76,0,1.52,0,2.27-.06,1.19,0,1.87-.09,3-.09A1.45,1.45,0,0,1,446.23,341Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M457.07,342.6a1.45,1.45,0,0,1-1.45-1.45V321.5a1.44,1.44,0,0,1,1.19-1.42,1.46,1.46,0,0,1,1.62.9c2.13,5.5,4.28,10.24,5.9,13.62V322.17a1.45,1.45,0,0,1,2.9,0v18.54a1.45,1.45,0,0,1-2.72.69c0-.06-2.74-5-6-12.54v12.29A1.45,1.45,0,0,1,457.07,342.6Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M497.47,343.54a5.14,5.14,0,0,1-2.4-.6,5.78,5.78,0,0,1-3.07-7,1.45,1.45,0,1,1,2.82.7,2.92,2.92,0,0,0,1.62,3.73,2.34,2.34,0,0,0,2.47-.21,3.86,3.86,0,0,0,1.6-3.54c-.25-2.21-2.47-4.44-4.43-6.4q-.34-.36-.69-.69a6,6,0,0,1-1.76-6.07,4.27,4.27,0,0,1,6.86-1.93,3.88,3.88,0,0,1,1.41,2.79,1.46,1.46,0,0,1-2.91,0,1.24,1.24,0,0,0-.46-.65,1.35,1.35,0,0,0-1.06-.27,1.37,1.37,0,0,0-1.09,1,3.17,3.17,0,0,0,1.08,3.11l.67.68c2.3,2.3,4.91,4.9,5.27,8.13a6.75,6.75,0,0,1-2.86,6.26A5.41,5.41,0,0,1,497.47,343.54Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M514.67,342.6a1.45,1.45,0,0,1-1.45-1.45V321.86a1.45,1.45,0,0,1,1.27-1.44c.22,0,5.6-.69,8.76,1.78a5.79,5.79,0,0,1,2.24,4.05,6.51,6.51,0,0,1-1.55,5.32c-2.16,2.44-5.94,3.09-7.82,3.27v6.31A1.45,1.45,0,0,1,514.67,342.6Zm1.45-19.38v8.7c1.7-.19,4.33-.78,5.65-2.28a3.7,3.7,0,0,0,.84-3.06,2.94,2.94,0,0,0-1.15-2.09C520.08,323.41,517.72,323.19,516.12,323.22Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M534.17,341.63V322.31a1.45,1.45,0,0,1,1.45-1.45h0a1.45,1.45,0,0,1,1.45,1.45v19.32a1.45,1.45,0,1,1-2.9,0Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M548.3,343.06a1.45,1.45,0,0,1-1.45-1.45V321.86a1.46,1.46,0,0,1,1.31-1.45c.22,0,5.44-.48,8.61,2.17a6.59,6.59,0,0,1,2.35,4.67,6.77,6.77,0,0,1-1.72,5.37,10.83,10.83,0,0,1-5.79,2.9c1.94,1.94,4.3,3.79,5.59,3.66a1.45,1.45,0,0,1,.29,2.89c-1.84.19-4-.91-6.73-3.35-.36-.32-.7-.65-1-1v3.85A1.45,1.45,0,0,1,548.3,343.06Zm1.45-19.78v9.6c1.64-.19,4.18-.77,5.52-2.23a4,4,0,0,0,1-3.16,3.73,3.73,0,0,0-1.32-2.68A8.84,8.84,0,0,0,549.75,323.28Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M568.92,341.63V322.31a1.45,1.45,0,0,1,1.45-1.45h0a1.45,1.45,0,0,1,1.45,1.45v19.32a1.45,1.45,0,1,1-2.9,0Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M594.07,322.34a1.46,1.46,0,0,1-1.49,1.39h0c-1.23-.06-2.41-.09-3.51-.1-.09,6.93-.18,17.33-.06,18.31a1.45,1.45,0,0,1-1.24,1.64h-.2a1.45,1.45,0,0,1-1.43-1.25c-.18-1.27,0-14.26,0-18.7-2,0-3.29.11-3.32.11h-.13a1.45,1.45,0,0,1,0-2.9c.19,0,4.67-.27,10,0A1.44,1.44,0,0,1,594.07,322.34Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M268.2,331.45c-.37-2-.76-4.07-1.3-6.06a25.12,25.12,0,0,1,12-5.35l.37,0a2.54,2.54,0,0,1,2.52,2.56v.26a2.52,2.52,0,0,1-2.1,2.5A19.94,19.94,0,0,0,268.2,331.45Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M263,313.85c-.75-1.66-1.56-3.29-2.41-4.84a41.06,41.06,0,0,1,18.38-6.36l.25,0a2.64,2.64,0,0,1,2.6,2.66,2.7,2.7,0,0,1-2.44,2.7A35.71,35.71,0,0,0,263,313.85Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M254.32,299.38c-1.14-1.5-2.26-2.87-3.4-4.17a58.16,58.16,0,0,1,28-9.89h.21a2.68,2.68,0,0,1,.19,5.34A53,53,0,0,0,254.32,299.38Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M243.65,288c-1.38-1.2-2.83-2.36-4.3-3.46A74,74,0,0,1,279,269.8h.18a2.68,2.68,0,0,1,.2,5.35A68.84,68.84,0,0,0,243.65,288Z" transform="translate(0.02 2.98)"/><path class="cls-3" d="M266.57,343.28a2.67,2.67,0,0,1-2.67-2.56,68.73,68.73,0,0,0-64.17-65.58,2.68,2.68,0,0,1,.16-5.35h.18a74.07,74.07,0,0,1,69.18,70.69,2.68,2.68,0,0,1-2.68,2.79Z" transform="translate(0.02 2.98)"/><path class="cls-2" d="M251.05,343.1a2.69,2.69,0,0,1-2.67-2.55,53.31,53.31,0,0,0-48.68-49.89,2.68,2.68,0,0,1,.18-5.35h.22a58.68,58.68,0,0,1,53.63,55,2.67,2.67,0,0,1-2.68,2.81Z" transform="translate(0.02 2.98)"/><path class="cls-4" d="M235.05,343.28a2.69,2.69,0,0,1-2.67-2.47A36.56,36.56,0,0,0,199.68,308a2.67,2.67,0,0,1,.26-5.34l.28,0a41.91,41.91,0,0,1,37.49,37.63,2.77,2.77,0,0,1-.7,2.12A2.63,2.63,0,0,1,235.05,343.28Z" transform="translate(0.02 2.98)"/><path class="cls-3" d="M218,343.28a2.67,2.67,0,0,1-2.64-2.23,19.18,19.18,0,0,0-15.89-15.7,2.69,2.69,0,0,1,.36-5.34l.4,0a24.52,24.52,0,0,1,20.43,20.18,2.6,2.6,0,0,1-.58,2.1,2.73,2.73,0,0,1-2.07,1Z" transform="translate(0.02 2.98)"/><path class="cls-2" d="M198,343.28a.8.8,0,0,1-.8-.8v-5.6a.8.8,0,0,1,.77-.81h.12a8.35,8.35,0,0,1,6.69,6.17.83.83,0,0,1-.15.73.78.78,0,0,1-.62.3Z" transform="translate(0.02 2.98)"/><path class="cls-5" d="M274.92,343.28a.78.78,0,0,1-.62-.3.86.86,0,0,1-.15-.73,8.35,8.35,0,0,1,6.69-6.17H281a.8.8,0,0,1,.77.81v3h0v2.56a.8.8,0,0,1-.8.8Z" transform="translate(0.02 2.98)"/></svg>
+
       <h1>Become a Volunteer</h1>
       <p>
         For 28 years, Motivating the Teen Spirit has equipped teens with the emotional intelligence,
@@ -294,6 +348,7 @@
         than ever before. Most are not being equipped with the tools to handle it.
         That is the gap we close — and we cannot close it without people like you.
       </p>
+      <span class="hero-accent"></span>
       <span class="hero-stat">2,000+ teens served &nbsp;·&nbsp; 8 in 10 return by choice &nbsp;·&nbsp; 28 years of service</span>
     </div>
   </header>
@@ -318,137 +373,151 @@
       <input type="hidden" name="inf_form_xid"  value="KEAP_FORM_XID" />
       <input type="hidden" name="inf_form_name" value="Volunteer Interest Form" />
 
-      <!-- SECTION 1 ── About You -->
-      <div class="form-group">
-        <div class="form-group-title">Section 1 — About You</div>
+      <div class="form-grid">
 
-        <div class="field-row">
-          <div class="field">
-            <label for="first_name">First name <span class="req">*</span></label>
-            <input type="text" id="first_name" name="inf_field_FirstName" required autocomplete="given-name" />
+        <!-- LEFT COLUMN: Section 1 + Section 2 -->
+        <div class="form-col">
+
+          <!-- SECTION 1 ── About You -->
+          <div class="form-group">
+            <div class="form-group-title">Section 1 — About You</div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="first_name">First name <span class="req">*</span></label>
+                <input type="text" id="first_name" name="inf_field_FirstName" required autocomplete="given-name" />
+              </div>
+              <div class="field">
+                <label for="last_name">Last name <span class="req">*</span></label>
+                <input type="text" id="last_name" name="inf_field_LastName" required autocomplete="family-name" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="email">Email address <span class="req">*</span></label>
+              <input type="email" id="email" name="inf_field_Email" required autocomplete="email" />
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone number <span class="req">*</span></label>
+              <input type="tel" id="phone" name="inf_field_Phone1" required autocomplete="tel" />
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="city">City <span class="req">*</span></label>
+                <input type="text" id="city" name="inf_field_City" required autocomplete="address-level2" />
+              </div>
+              <div class="field">
+                <label for="state">State <span class="req">*</span></label>
+                <input type="text" id="state" name="inf_field_State" required autocomplete="address-level1" placeholder="e.g. CA" />
+              </div>
+            </div>
           </div>
-          <div class="field">
-            <label for="last_name">Last name <span class="req">*</span></label>
-            <input type="text" id="last_name" name="inf_field_LastName" required autocomplete="family-name" />
+
+          <!-- SECTION 2 ── Your Background -->
+          <div class="form-group">
+            <div class="form-group-title">Section 2 — Your Background</div>
+
+            <div class="field">
+              <label for="occupation">Current occupation or role <span class="req">*</span></label>
+              <!-- KEAP: Create custom field "Occupation" and update name attribute to match -->
+              <input type="text" id="occupation" name="inf_custom_Occupation" required />
+            </div>
+
+            <div class="field">
+              <label>Have you worked with teens before? <span class="req">*</span></label>
+              <!-- KEAP: Create custom radio field "TeenExperience" and update name attributes to match -->
+              <div class="radio-group">
+                <label>
+                  <input type="radio" name="inf_custom_TeenExperience" value="Yes" required
+                    onchange="document.getElementById('teen-detail').classList.add('visible')" />
+                  Yes
+                </label>
+                <label>
+                  <input type="radio" name="inf_custom_TeenExperience" value="No"
+                    onchange="document.getElementById('teen-detail').classList.remove('visible')" />
+                  No
+                </label>
+              </div>
+            </div>
+
+            <div class="conditional-field" id="teen-detail">
+              <div class="field">
+                <label for="teen_detail_text">Briefly describe that experience <span class="hint">(optional)</span></label>
+                <!-- KEAP: Create custom textarea field "TeenExperienceDetail" and update name attribute -->
+                <textarea id="teen_detail_text" name="inf_custom_TeenExperienceDetail" rows="3"></textarea>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="field">
-          <label for="email">Email address <span class="req">*</span></label>
-          <input type="email" id="email" name="inf_field_Email" required autocomplete="email" />
-        </div>
+        </div><!-- /form-col left -->
 
-        <div class="field">
-          <label for="phone">Phone number <span class="req">*</span></label>
-          <input type="tel" id="phone" name="inf_field_Phone1" required autocomplete="tel" />
-        </div>
+        <!-- RIGHT COLUMN: Section 3 + Section 4 -->
+        <div class="form-col">
 
-        <div class="field-row">
-          <div class="field">
-            <label for="city">City <span class="req">*</span></label>
-            <input type="text" id="city" name="inf_field_City" required autocomplete="address-level2" />
+          <!-- SECTION 3 ── Your Interest -->
+          <div class="form-group">
+            <div class="form-group-title">Section 3 — Your Interest</div>
+
+            <div class="field">
+              <label for="motivation">Why do you want to volunteer with Motivating the Teen Spirit? <span class="req">*</span></label>
+              <!-- KEAP: Create custom textarea field "VolunteerMotivation" and update name attribute -->
+              <textarea id="motivation" name="inf_custom_VolunteerMotivation" rows="4" required></textarea>
+            </div>
+
+            <div class="field">
+              <label for="referral">How did you hear about us? <span class="req">*</span></label>
+              <!-- KEAP: Create custom text field "ReferralSource" and update name attribute -->
+              <input type="text" id="referral" name="inf_custom_ReferralSource" required />
+            </div>
           </div>
-          <div class="field">
-            <label for="state">State <span class="req">*</span></label>
-            <input type="text" id="state" name="inf_field_State" required autocomplete="address-level1" placeholder="e.g. CA" />
+
+          <!-- SECTION 4 ── Availability & Role -->
+          <div class="form-group">
+            <div class="form-group-title">Section 4 — Availability &amp; Role</div>
+
+            <div class="field">
+              <label>Availability <span class="req">*</span> <span class="hint">Select all that apply</span></label>
+              <!-- KEAP: Create custom checkbox fields for each option and update name attributes -->
+              <div class="checkbox-grid">
+                <label><input type="checkbox" name="inf_custom_AvailWeekdayMornings" value="Weekday mornings" /> Weekday mornings</label>
+                <label><input type="checkbox" name="inf_custom_AvailWeekdayEvenings" value="Weekday evenings" /> Weekday evenings</label>
+                <label><input type="checkbox" name="inf_custom_AvailWeekends"         value="Weekends"         /> Weekends</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Areas of interest <span class="req">*</span> <span class="hint">Select all that apply</span></label>
+              <!-- KEAP: Create custom checkbox fields for each option and update name attributes -->
+              <div class="checkbox-grid">
+                <label><input type="checkbox" name="inf_custom_InterestFacilitation" value="Program facilitation" /> Program facilitation</label>
+                <label><input type="checkbox" name="inf_custom_InterestEvents"        value="Event support"        /> Event support</label>
+                <label><input type="checkbox" name="inf_custom_InterestOutreach"      value="Community outreach"   /> Community outreach</label>
+                <label><input type="checkbox" name="inf_custom_InterestAdmin"         value="Admin &amp; operations"       /> Admin &amp; operations</label>
+                <label><input type="checkbox" name="inf_custom_InterestSocial"        value="Social media &amp; content"   /> Social media &amp; content</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Are you willing to undergo a background check? <span class="req">*</span></label>
+              <!-- KEAP: Create custom radio field "BackgroundCheck" and update name attributes -->
+              <div class="radio-group">
+                <label><input type="radio" name="inf_custom_BackgroundCheck" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="inf_custom_BackgroundCheck" value="No"            /> No</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="notes">Anything else you'd like us to know? <span class="hint">(optional)</span></label>
+              <!-- KEAP: Create custom textarea field "AdditionalNotes" and update name attribute -->
+              <textarea id="notes" name="inf_custom_AdditionalNotes" rows="3"></textarea>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <!-- SECTION 2 ── Your Background -->
-      <div class="form-group">
-        <div class="form-group-title">Section 2 — Your Background</div>
+        </div><!-- /form-col right -->
 
-        <div class="field">
-          <label for="occupation">Current occupation or role <span class="req">*</span></label>
-          <!-- KEAP: Create custom field "Occupation" and update name attribute to match -->
-          <input type="text" id="occupation" name="inf_custom_Occupation" required />
-        </div>
-
-        <div class="field">
-          <label>Have you worked with teens before? <span class="req">*</span></label>
-          <!-- KEAP: Create custom radio field "TeenExperience" and update name attributes to match -->
-          <div class="radio-group">
-            <label>
-              <input type="radio" name="inf_custom_TeenExperience" value="Yes" required
-                onchange="document.getElementById('teen-detail').classList.add('visible')" />
-              Yes
-            </label>
-            <label>
-              <input type="radio" name="inf_custom_TeenExperience" value="No"
-                onchange="document.getElementById('teen-detail').classList.remove('visible')" />
-              No
-            </label>
-          </div>
-        </div>
-
-        <div class="conditional-field" id="teen-detail">
-          <div class="field">
-            <label for="teen_detail_text">Briefly describe that experience <span class="hint">(optional)</span></label>
-            <!-- KEAP: Create custom textarea field "TeenExperienceDetail" and update name attribute -->
-            <textarea id="teen_detail_text" name="inf_custom_TeenExperienceDetail" rows="3"></textarea>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECTION 3 ── Your Interest -->
-      <div class="form-group">
-        <div class="form-group-title">Section 3 — Your Interest</div>
-
-        <div class="field">
-          <label for="motivation">Why do you want to volunteer with Motivating the Teen Spirit? <span class="req">*</span></label>
-          <!-- KEAP: Create custom textarea field "VolunteerMotivation" and update name attribute -->
-          <textarea id="motivation" name="inf_custom_VolunteerMotivation" rows="4" required></textarea>
-        </div>
-
-        <div class="field">
-          <label for="referral">How did you hear about us? <span class="req">*</span></label>
-          <!-- KEAP: Create custom text field "ReferralSource" and update name attribute -->
-          <input type="text" id="referral" name="inf_custom_ReferralSource" required />
-        </div>
-      </div>
-
-      <!-- SECTION 4 ── Availability & Role -->
-      <div class="form-group">
-        <div class="form-group-title">Section 4 — Availability &amp; Role</div>
-
-        <div class="field">
-          <label>Availability <span class="req">*</span> <span class="hint">Select all that apply</span></label>
-          <!-- KEAP: Create custom checkbox fields for each option and update name attributes -->
-          <div class="checkbox-grid">
-            <label><input type="checkbox" name="inf_custom_AvailWeekdayMornings" value="Weekday mornings" /> Weekday mornings</label>
-            <label><input type="checkbox" name="inf_custom_AvailWeekdayEvenings" value="Weekday evenings" /> Weekday evenings</label>
-            <label><input type="checkbox" name="inf_custom_AvailWeekends"         value="Weekends"         /> Weekends</label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Areas of interest <span class="req">*</span> <span class="hint">Select all that apply</span></label>
-          <!-- KEAP: Create custom checkbox fields for each option and update name attributes -->
-          <div class="checkbox-grid">
-            <label><input type="checkbox" name="inf_custom_InterestFacilitation" value="Program facilitation" /> Program facilitation</label>
-            <label><input type="checkbox" name="inf_custom_InterestEvents"        value="Event support"        /> Event support</label>
-            <label><input type="checkbox" name="inf_custom_InterestOutreach"      value="Community outreach"   /> Community outreach</label>
-            <label><input type="checkbox" name="inf_custom_InterestAdmin"         value="Admin &amp; operations"       /> Admin &amp; operations</label>
-            <label><input type="checkbox" name="inf_custom_InterestSocial"        value="Social media &amp; content"   /> Social media &amp; content</label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Are you willing to undergo a background check? <span class="req">*</span></label>
-          <!-- KEAP: Create custom radio field "BackgroundCheck" and update name attributes -->
-          <div class="radio-group">
-            <label><input type="radio" name="inf_custom_BackgroundCheck" value="Yes" required /> Yes</label>
-            <label><input type="radio" name="inf_custom_BackgroundCheck" value="No"            /> No</label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="notes">Anything else you'd like us to know? <span class="hint">(optional)</span></label>
-          <!-- KEAP: Create custom textarea field "AdditionalNotes" and update name attribute -->
-          <textarea id="notes" name="inf_custom_AdditionalNotes" rows="3"></textarea>
-        </div>
-      </div>
+      </div><!-- /form-grid -->
 
       <div class="submit-wrap">
         <button type="submit" class="btn-submit">Submit Volunteer Application</button>
